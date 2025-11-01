@@ -1,0 +1,20 @@
+{
+  "name": "jira-query-action",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "ncc build index.js -o dist"
+  },
+  "keywords": [],
+  "author": "Bruno Ferreira",
+  "license": "MIT",
+  "description": "Jira Query Action - Executes JQL queries in Jira with pagination, optional fields, and JSON export",
+  "type": "module",
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/http-client": "^3.0.0"
+  },
+   "devDependencies": {
+    "@vercel/ncc": "^0.38.1"
+  }
+}

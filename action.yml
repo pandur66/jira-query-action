@@ -1,0 +1,36 @@
+name: "Jira Query"
+description: "Executes JQL queries in Jira with pagination, optional fields, and JSON export"
+author: "Bruno Ferreira"
+inputs:
+  jira_base_url:
+    description: "Jira base URL (e.g., https://company.atlassian.net)"
+    required: true
+  jira_user_email:
+    description: "Jira user email (for authentication)"
+    required: true
+  jira_api_token:
+    description: "Jira API token"
+    required: true
+  jql:
+    description: "The JQL query to execute"
+    required: true
+  fields:
+    description: "Specific fields to return (e.g., key,summary,status)"
+    required: false
+  max_results:
+    description: "Maximum number of issues to return (default: 1000)"
+    required: false
+    default: "1000"
+  output_file:
+    description: "Optional path to save the JSON result (e.g., ./jira-results.json)"
+    required: false
+outputs:
+  issues:
+    description: "JSON list of issues returned (may be truncated for large result sets)"
+  issues_count:
+    description: "Number of issues returned"
+  issues_file:
+    description: "Path to file containing full JSON results (if output_file was used)"
+runs:
+  using: "node20"
+  main: "dist/index.js"
