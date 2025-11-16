@@ -52,7 +52,7 @@ jobs:
 
       - name: Query Jira for open issues
         id: jira
-        uses: pandur66/jira-query-action@v1
+        uses: pandur66/jira-query-action@main
         with:
           baseUrl: https://company.atlassian.net
           userEmail: ${{ secrets.JIRA_USER_EMAIL }}
@@ -79,7 +79,7 @@ jobs:
 ```yaml
 - name: Get issue IDs only
   id: jira
-  uses: pandur66/jira-query-action@v1
+  uses: pandur66/jira-query-action@main
   with:
     baseUrl: https://company.atlassian.net
     userEmail: ${{ secrets.JIRA_USER_EMAIL }}
@@ -259,7 +259,7 @@ npm run test:coverage
 
 ## Implementation notes
 
-- This action runs on `node20` and uses the Jira REST API `/rest/api/3/search`
+- This action runs on `node20` and uses the Jira REST API `/rest/api/3/search/jql`
 - Written in TypeScript and bundled with esbuild
 - Fully supports ESM (ECMAScript modules)
 
