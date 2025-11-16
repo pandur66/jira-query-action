@@ -1,36 +1,66 @@
 name: "Jira Query"
-description: "Executes JQL queries in Jira with pagination, optional fields, and JSON export"
+description: "GitHub Action to search and retrieve Jira issues using JQL queries with pagination, custom fields, and JSON export support."
 author: "Bruno Ferreira"
 inputs:
-  jira_base_url:
-    description: "Jira base URL (e.g., https://company.atlassian.net)"
+  baseUrl:
+    description: "Jira base URL (e.g., https://company.atlassian.net)."
     required: true
-  jira_user_email:
-    description: "Jira user email (for authentication)"
+  userEmail:
+    description: "Jira user email for authentication."
     required: true
-  jira_api_token:
-    description: "Jira API token"
+  apiToken:
+    description: "Jira API token."
     required: true
   jql:
-    description: "The JQL query to execute"
+    description: "The JQL query to execute."
     required: true
+  maxResults:
+    description: "Maximum results to fetch per page (default is 50)."
+    required: false
+    default: "50"
+  method:
+    description: >
+      HTTP method to use when calling the Jira search API (default: auto). Valid values: 'get' (force GET request), 'post' (force POST request), 'auto' (automatically choose based on JQL length).
+    required: false
+    default: "auto"
+  idsOnly:
+    description: "If true, only issue IDs will be returned (default: false)."
+    required: false
+    default: "false"
   fields:
-    description: "Specific fields to return (e.g., key,summary,status)"
+    description: "Comma-separated list of fields to return for each issue; use it to retrieve a subset of fields (e.g., key,summary,status)."
     required: false
-  max_results:
-    description: "Maximum number of issues to return (default: 1000)"
+    default: ""
+  expand:
+    description: "Comma-separated list of expand parameters (e.g., names,schema)."
     required: false
-    default: "1000"
-  output_file:
-    description: "Optional path to save the JSON result (e.g., ./jira-results.json)"
+    default: ""
+  properties:
+    description: "Comma-separated list of up to 5 issue properties to include in the results."
+    required: false
+    default: ""
+  fieldsByKeys:
+    description: "Reference fields by their key (rather than ID); default is false."
+    required: false
+    default: "false"
+  failFast:
+    description: "Fail this request early if we cannot retrieve all field data; default is false."
+    required: false
+    default: "false"
+  reconcileIssues:
+    description: "Comma-separated list of issue IDs to be reconciled with search results; accepts max 50 IDs."
+    required: false
+    default: ""
+  outputFile:
+    description: "Optional path to save the JSON result (e.g., ./issues.json)."
     required: false
 outputs:
-  issues:
-    description: "JSON list of issues returned (may be truncated for large result sets)"
-  issues_count:
-    description: "Number of issues returned"
-  issues_file:
-    description: "Path to file containing full JSON results (if output_file was used)"
+  issuesCount:
+    description: "Number of issues returned."
+  issuesIds:
+    description: "Comma-separated list of issue IDs returned."
+  issuesFile:
+    description: "Path to file containing full JSON results (if outputFile was used)."
 runs:
   using: "node20"
   main: "dist/index.js"
